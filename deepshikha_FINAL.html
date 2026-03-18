@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Deepshikha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff9fb;--bg-alt:#ffffff;--border:#f3d8e7;--text:#3a2a34;--muted:#a57c92;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:"Poppins",system-ui,sans-serif;background:radial-gradient(circle at top left,#ffe4f0 0,#fff9fb 36%,#f9fbff 100%);color:var(--text);}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,249,251,0.96);backdrop-filter:blur(18px);border-bottom:1px solid #f7dce9;padding:10px 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;}
+.brand{display:flex;align-items:center;gap:10px;}
+.logo{font-size:30px;}
+.brand-text h1{margin:0;font-family:"Playfair Display",serif;font-size:22px;}
+.brand-text p{margin:0;font-size:12px;color:var(--muted);}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;}
+.tab{border-radius:999px;border:1.5px solid transparent;padding:6px 14px;font-size:12px;cursor:pointer;background:#ffeef6;color:var(--muted);}
+.tab.active{background:linear-gradient(135deg,#ffb7c5,#ffd2e2);border-color:#ffb7c5;color:#3a2a34;font-weight:600;}
+.content{max-width:1080px;margin:20px auto 40px;padding:0 16px;}
+.tab-page{display:none;animation:fade .2s ease-out;}
+.tab-page.active{display:block;}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.hero-card{background:linear-gradient(135deg,#ffe6ef,#fff9fb);border-radius:22px;padding:22px 20px;box-shadow:0 10px 30px rgba(255,135,190,.25);margin-bottom:20px;border:1px solid #ffd1e6;}
+.hero-card h2{margin:0 0 6px;font-family:"Playfair Display",serif;font-size:24px;}
+.hero-card p{margin:0;color:var(--muted);font-size:13px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;}
+.nav-card{background:var(--bg-alt);border-radius:20px;padding:22px 18px;text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.nav-card .icon{font-size:30px;margin-bottom:8px;}
+.nav-card h3{margin:0 0 4px;font-size:14px;}
+.nav-card p{margin:0;font-size:11px;color:var(--muted);}
+.nav-card:nth-child(1){border:2px solid #ffb7c5;}.nav-card:nth-child(2){border:2px solid #b5e3ff;}
+.nav-card:nth-child(3){border:2px solid #c7b5ff;}.nav-card:nth-child(4){border:2px solid #ffe4a3;}
+.nav-card:nth-child(5){border:2px solid #b6f1d7;}.nav-card:nth-child(6){border:2px solid #f5c8ff;}
+.nav-card:hover{transform:translateY(-4px);box-shadow:0 14px 28px rgba(0,0,0,.12);}
+.two-col{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;}
+.stack{display:flex;flex-direction:column;gap:18px;}
+.card{background:var(--bg-alt);border-radius:18px;padding:20px 18px;box-shadow:0 8px 20px rgba(0,0,0,.04);border:1px solid #f5deea;}
+.card h3{margin:0 0 8px;font-family:"Playfair Display",serif;}
+.card .hint{margin:0 0 10px;font-size:12px;color:var(--muted);}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
+.pill{border-radius:999px;border:1.5px solid transparent;padding:5px 12px;font-size:11px;cursor:pointer;background:#ffeef6;color:var(--muted);}
+.pill.active{background:linear-gradient(135deg,#ffb7c5,#ffd2e2);border-color:#ffb7c5;color:#3a2a34;font-weight:500;}
+.embed-card{background:#fff6fb;border-radius:16px;padding:14px;min-height:120px;border:1px dashed #f0c4dc;}
+.embed-panel{display:none;}.embed-panel.active{display:block;}
+.placeholder{margin:0;font-size:12px;color:var(--muted);}
+.accordion{border-radius:14px;border:1px solid #f3d8e7;background:#fff7fb;padding:10px 14px;margin-bottom:8px;}
+.accordion summary{cursor:pointer;font-weight:500;font-size:13px;}
+.accordion[open]{background:#ffeaf4;}
+.link-list{list-style:none;padding-left:0;margin:8px 0 0;}
+.link-list li{margin-bottom:4px;}
+.link-list a{font-size:12px;color:#e67ba2;text-decoration:none;}
+.link-list a:hover{text-decoration:underline;}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}
+.note-card{background:#fff;border-radius:16px;border:1px solid #c4daf5;padding:12px;box-shadow:0 4px 14px rgba(0,0,0,.05);}
+.note-card h4{margin:0 0 6px;font-size:13px;color:#295a9b;}
+.note-card textarea{width:100%;border-radius:10px;border:1px solid #d0def5;min-height:80px;font-family:inherit;font-size:12px;padding:7px 8px;resize:vertical;outline:none;}
+.note-card textarea:focus{border-color:#7aa6d9;}
+.form-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+input,select{padding:7px 10px;border-radius:10px;border:1px solid var(--border);font-size:12px;min-width:120px;background:#fff;}
+button.primary{border-radius:10px;border:none;background:linear-gradient(135deg,#ffb7c5,#ffd2e2);color:white;padding:7px 16px;font-size:12px;cursor:pointer;box-shadow:0 4px 10px rgba(255,132,178,.4);}
+button.primary:hover{filter:brightness(1.05);}
+button.small{border-radius:8px;border:none;padding:4px 10px;font-size:11px;cursor:pointer;background:#ffebee;color:#c62828;}
+.table-wrap{overflow-x:auto;margin-top:6px;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th,td{padding:8px 10px;border-bottom:1px solid #f6e0ec;text-align:left;}
+th{background:#ffeaf4;font-weight:500;}
+tr:hover td{background:#fff5fb;}
+.badge{border-radius:999px;padding:2px 8px;font-size:11px;}
+.badge.pending{background:#fff8e1;color:#b76e00;}.badge.applied{background:#e3f2fd;color:#1565c0;}
+.badge.shortlisted{background:#e8f5e9;color:#2e7d32;}.badge.rejected{background:#ffebee;color:#c62828;}
+.deadline-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:8px;}
+.deadline-card{background:#fff;border-radius:16px;padding:12px;box-shadow:0 4px 14px rgba(0,0,0,.06);border-left:4px solid #ffe4a3;position:relative;}
+.deadline-title{font-size:13px;font-weight:500;margin-bottom:2px;}
+.deadline-meta{font-size:11px;color:var(--muted);}
+.deadline-status{font-size:11px;margin-top:6px;font-weight:600;}
+.deadline-status.urgent{color:#c62828;}.deadline-status.soon{color:#e65100;}.deadline-status.safe{color:#2e7d32;}
+.deadline-card button.small{position:absolute;top:6px;right:6px;}
+#quiz-box{margin-top:10px;}
+.q-meta{font-size:11px;color:var(--muted);margin-bottom:6px;}
+.q-text{font-size:15px;margin-bottom:10px;}
+.q-options{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;}
+.q-option{display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:10px;background:#fff5fb;border:1px solid #f3d8e7;font-size:13px;cursor:pointer;}
+.q-option input{margin:0;}
+.q-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:4px;}
+.footer{text-align:center;font-size:11px;color:var(--muted);padding:12px 8px 18px;border-top:1px solid #f3d8e7;}
+@media(max-width:768px){.two-col{grid-template-columns:1fr;}.topbar{justify-content:center;}}
+</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">📖</span>
+      <div class="brand-text">
+        <h1>Deepshikha</h1>
+        <p>English Literature · German · PhD · Your Study Space</p>
+      </div>
+    </div>
+    <nav class="tabs" id="main-tabs">
+      <button class="tab active" data-tab="home">Home</button>
+      <button class="tab" data-tab="ma">MA Lit</button>
+      <button class="tab" data-tab="german">German</button>
+      <button class="tab" data-tab="phd">PhD Prep</button>
+      <button class="tab" data-tab="quizzes">Quizzes</button>
+      <button class="tab" data-tab="calendar">Calendar</button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <section id="home" class="tab-page active">
+      <div class="hero-card">
+        <h2>Welcome to Deepshikha ✨</h2>
+        <p>A single space for your MA readings, German practice, PhD prep, and application tracking. All data is saved locally in your browser.</p>
+      </div>
+      <div class="grid">
+        <div class="nav-card" data-jump="ma"><div class="icon">📚</div><h3>MA English Literature</h3><p>Paper-wise PYQs, books and lecture playlists.</p></div>
+        <div class="nav-card" data-jump="german"><div class="icon">🇩🇪</div><h3>German Learning</h3><p>Playlists, vocab and auto-saved notes.</p></div>
+        <div class="nav-card" data-jump="phd"><div class="icon">🎓</div><h3>PhD Prep</h3><p>Readings, drafts and application tracker.</p></div>
+        <div class="nav-card" data-jump="quizzes"><div class="icon">📝</div><h3>Practice Quizzes</h3><p>Theory, postcolonial, British lit, cultural studies.</p></div>
+        <div class="nav-card" data-jump="calendar"><div class="icon">📅</div><h3>Deadlines & Schedule</h3><p>Track exams, applications, and reading goals.</p></div>
+        <div class="nav-card" data-jump="phd"><div class="icon">📚</div><h3>Drive / Zotero</h3><p>Embed your libraries and folders.</p></div>
+      </div>
+    </section>
+
+    <section id="ma" class="tab-page">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:18px">MA English Literature</h2>
+      <div class="two-col">
+        <div>
+          <div class="card">
+            <h3>Video Playlists</h3>
+            <div class="pill-row" id="ma-playlist-tabs">
+              <button class="pill active" data-target="ma-british">British</button>
+              <button class="pill" data-target="ma-theory">Theory</button>
+              <button class="pill" data-target="ma-postcolonial">Postcolonial</button>
+              <button class="pill" data-target="ma-cultural">Cultural Studies</button>
+              <button class="pill" data-target="ma-american">American</button>
+            </div>
+            <div class="embed-card">
+              <div class="embed-panel active" id="ma-british"><p class="placeholder">Paste your British Lit YouTube playlist iframe here.</p></div>
+              <div class="embed-panel" id="ma-theory"><p class="placeholder">Paste your Literary Theory playlist iframe here.</p></div>
+              <div class="embed-panel" id="ma-postcolonial"><p class="placeholder">Paste your Postcolonial playlist iframe here.</p></div>
+              <div class="embed-panel" id="ma-cultural"><p class="placeholder">Paste your Cultural Studies playlist iframe here.</p></div>
+              <div class="embed-panel" id="ma-american"><p class="placeholder">Paste your American Lit playlist iframe here.</p></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h3>PYQs & Books</h3>
+            <details class="accordion" open><summary>Paper 1 – British Literature</summary><ul class="link-list"><li><a href="#">PYQ 2024</a></li><li><a href="#">PYQ 2023</a></li><li><a href="#">PYQ 2022</a></li></ul></details>
+            <details class="accordion"><summary>Paper 2 – Literary Theory</summary><ul class="link-list"><li><a href="#">PYQ 2024</a></li><li><a href="#">PYQ 2023</a></li></ul></details>
+            <details class="accordion"><summary>Paper 3 – Postcolonial</summary><ul class="link-list"><li><a href="#">PYQ 2024</a></li><li><a href="#">PYQ 2023</a></li></ul></details>
+            <details class="accordion"><summary>Google Drive / OneDrive Books</summary><div class="embed-card"><p class="placeholder">Paste your Drive folder iframe here.</p></div></details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="german" class="tab-page">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:18px">German Learning</h2>
+      <div class="two-col">
+        <div>
+          <div class="card">
+            <h3>Playlists</h3>
+            <div class="pill-row" id="de-playlist-tabs">
+              <button class="pill active" data-target="de-a1">A1 Basics</button>
+              <button class="pill" data-target="de-a2">A2 Grammar</button>
+              <button class="pill" data-target="de-vocab">Vocabulary</button>
+              <button class="pill" data-target="de-listen">Listening</button>
+              <button class="pill" data-target="de-goethe">Goethe Prep</button>
+            </div>
+            <div class="embed-card">
+              <div class="embed-panel active" id="de-a1"><p class="placeholder">Paste your A1 playlist iframe here.</p></div>
+              <div class="embed-panel" id="de-a2"><p class="placeholder">Paste your A2 grammar playlist iframe here.</p></div>
+              <div class="embed-panel" id="de-vocab"><p class="placeholder">Paste your vocabulary playlist iframe here.</p></div>
+              <div class="embed-panel" id="de-listen"><p class="placeholder">Paste your listening playlist iframe here.</p></div>
+              <div class="embed-panel" id="de-goethe"><p class="placeholder">Paste your Goethe prep playlist iframe here.</p></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <h3>Notes (auto-saved)</h3>
+            <div class="notes-grid">
+              <article class="note-card" data-key="de_w1"><h4>Week 1 – Greetings</h4><textarea placeholder="Write notes…"></textarea></article>
+              <article class="note-card" data-key="de_w2"><h4>Week 2 – Articles</h4><textarea placeholder="der / die / das…"></textarea></article>
+              <article class="note-card" data-key="de_w3"><h4>Week 3 – Verbs</h4><textarea placeholder="sein, haben…"></textarea></article>
+              <article class="note-card" data-key="de_w4"><h4>Week 4 – Cases</h4><textarea placeholder="Nominativ, Akkusativ…"></textarea></article>
+              <article class="note-card" data-key="de_v"><h4>Vocabulary</h4><textarea placeholder="New words…"></textarea></article>
+              <article class="note-card" data-key="de_g"><h4>Goethe Tips</h4><textarea placeholder="Exam strategies…"></textarea></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="phd" class="tab-page">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:18px">PhD Prep</h2>
+      <div class="stack">
+        <section class="card">
+          <h3>Application Tracker</h3>
+          <div class="form-row">
+            <input id="app-uni" type="text" placeholder="University"/>
+            <input id="app-country" type="text" placeholder="Country"/>
+            <input id="app-sup" type="text" placeholder="Supervisor"/>
+          </div>
+          <div class="form-row">
+            <input id="app-deadline" type="date"/>
+            <select id="app-status"><option value="pending">Pending</option><option value="applied">Applied</option><option value="shortlisted">Shortlisted</option><option value="rejected">Rejected</option></select>
+            <button class="primary" id="app-add">+ Add</button>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>University</th><th>Country</th><th>Supervisor</th><th>Deadline</th><th>Status</th><th></th></tr></thead><tbody id="app-table"></tbody></table></div>
+        </section>
+        <section class="card">
+          <h3>Proposal Drafts</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px">
+            <div style="background:#fff6fb;border-radius:14px;padding:14px;border-left:4px solid #ffb7c5"><strong style="font-size:13px;color:#c2185b">Draft 1</strong><p style="font-size:12px;color:#a57c92;margin:4px 0 10px">Initial research proposal</p><a href="#" style="font-size:12px;color:#e67ba2">Open Google Doc ↗</a></div>
+            <div style="background:#fff6fb;border-radius:14px;padding:14px;border-left:4px solid #c7b5ff"><strong style="font-size:13px;color:#6a1b9a">Draft 2</strong><p style="font-size:12px;color:#a57c92;margin:4px 0 10px">Revised with feedback</p><a href="#" style="font-size:12px;color:#e67ba2">Open Google Doc ↗</a></div>
+            <div style="background:#fff6fb;border-radius:14px;padding:14px;border-left:4px solid #b6f1d7"><strong style="font-size:13px;color:#2e7d32">Draft 3</strong><p style="font-size:12px;color:#a57c92;margin:4px 0 10px">Literature review chapter</p><a href="#" style="font-size:12px;color:#e67ba2">Open Google Doc ↗</a></div>
+            <div style="background:#fff6fb;border-radius:14px;padding:14px;border-left:4px solid #ffe4a3"><strong style="font-size:13px;color:#b76e00">Final Draft</strong><p style="font-size:12px;color:#a57c92;margin:4px 0 10px">Submission-ready proposal</p><a href="#" style="font-size:12px;color:#e67ba2">Open Google Doc ↗</a></div>
+          </div>
+        </section>
+        <section class="card">
+          <h3>PhD Readings</h3>
+          <div class="embed-card"><p class="placeholder">Paste your Google Drive / Zotero iframe here.</p></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="quizzes" class="tab-page">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:18px">Practice Quizzes</h2>
+      <div class="pill-row" id="quiz-tabs">
+        <button class="pill active" data-quiz="theory">Literary Theory</button>
+        <button class="pill" data-quiz="postcolonial">Postcolonial</button>
+        <button class="pill" data-quiz="british">British Lit</button>
+        <button class="pill" data-quiz="cultural">Cultural Studies</button>
+      </div>
+      <section class="card" id="quiz-box"></section>
+    </section>
+
+    <section id="calendar" class="tab-page">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:18px">Deadlines & Schedule</h2>
+      <section class="card" style="margin-bottom:18px">
+        <h3>Google Calendar</h3>
+        <p class="hint">Go to Google Calendar → Settings → Integrate Calendar → copy iframe → paste below replacing the placeholder.</p>
+        <div class="embed-card"><p class="placeholder">Paste your Google Calendar iframe here.</p></div>
+      </section>
+      <section class="card">
+        <h3>Deadline Tracker</h3>
+        <div class="form-row">
+          <input id="dl-title" type="text" placeholder="e.g. JNU PhD deadline"/>
+          <select id="dl-type"><option>PhD Application</option><option>Exam</option><option>Assignment</option><option>German Test</option><option>Reading Goal</option><option>Other</option></select>
+          <input id="dl-date" type="date"/>
+          <button class="primary" id="dl-add">+ Add</button>
+        </div>
+        <div class="deadline-grid" id="dl-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">Deepshikha · Study Space · All data saved locally in your browser.</footer>
+
+<script>
+// Tab switching
+const tabButtons = document.querySelectorAll(".tab");
+const pages = document.querySelectorAll(".tab-page");
+
+tabButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const tab = btn.dataset.tab;
+    tabButtons.forEach(b => b.classList.remove("active"));
+    pages.forEach(p => p.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(tab).classList.add("active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+});
+
+// Home nav cards -> tabs
+const navCards = document.querySelectorAll(".nav-card");
+navCards.forEach(card => {
+  card.addEventListener("click", () => {
+    const target = card.dataset.jump;
+    const btn = document.querySelector(`.tab[data-tab="${target}"]`);
+    if (btn) btn.click();
+  });
+});
+
+// Mini tab groups (playlists)
+function wireMiniTabs(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const pills = container.querySelectorAll(".pill");
+  pills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      const target = pill.dataset.target;
+      const wrap = pill.closest("section, div");
+      const panels = wrap.querySelectorAll(".embed-panel");
+      pills.forEach(p => p.classList.remove("active"));
+      panels.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      const panel = document.getElementById(target);
+      if (panel) panel.classList.add("active");
+    });
+  });
+}
+
+wireMiniTabs("ma-playlist-tabs");
+wireMiniTabs("de-playlist-tabs");
+
+// German notes autosave
+const noteCards = document.querySelectorAll(".note-card");
+noteCards.forEach(card => {
+  const key = card.dataset.key;
+  const textarea = card.querySelector("textarea");
+  if (!key || !textarea) return;
+  const saved = localStorage.getItem(key);
+  if (saved) textarea.value = saved;
+  textarea.addEventListener("input", () => {
+    localStorage.setItem(key, textarea.value);
+  });
+});
+
+// PhD application tracker
+const appKey = "englit_phd_apps";
+let apps = JSON.parse(localStorage.getItem(appKey) || "[]");
+const appTable = document.getElementById("app-table");
+
+function renderApps() {
+  if (!appTable) return;
+  appTable.innerHTML = "";
+  if (!apps.length) {
+    appTable.innerHTML = '<tr><td colspan="6" style="text-align:center;font-size:12px;color:#9e8f7e;padding:10px">No applications yet.</td></tr>';
+    return;
+  }
+  apps.slice().sort((a, b) => new Date(a.deadline || 0) - new Date(b.deadline || 0))
+    .forEach((app, index) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${app.uni}</td>
+        <td>${app.country || ""}</td>
+        <td>${app.sup || ""}</td>
+        <td>${app.deadline || ""}</td>
+        <td><span class="badge ${app.status}">${app.status}</span></td>
+        <td><button class="small" data-index="${index}">Remove</button></td>
+      `;
+      appTable.appendChild(tr);
+    });
+}
+
+renderApps();
+
+const addBtn = document.getElementById("app-add");
+if (addBtn) {
+  addBtn.addEventListener("click", () => {
+    const uni = document.getElementById("app-uni").value.trim();
+    if (!uni) return;
+    apps.push({
+      uni,
+      country: document.getElementById("app-country").value.trim(),
+      sup: document.getElementById("app-sup").value.trim(),
+      deadline: document.getElementById("app-deadline").value,
+      status: document.getElementById("app-status").value,
+    });
+    localStorage.setItem(appKey, JSON.stringify(apps));
+    renderApps();
+    ["app-uni","app-country","app-sup","app-deadline"].forEach(id => document.getElementById(id).value = "");
+  });
+}
+
+if (appTable) {
+  appTable.addEventListener("click", e => {
+    const btn = e.target.closest("button.small");
+    if (!btn) return;
+    apps.splice(Number(btn.dataset.index), 1);
+    localStorage.setItem(appKey, JSON.stringify(apps));
+    renderApps();
+  });
+}
+
+// Deadline tracker
+const dlKey = "englit_deadlines";
+let deadlines = JSON.parse(localStorage.getItem(dlKey) || "[]");
+const dlList = document.getElementById("dl-list");
+
+function daysLeft(date) {
+  if (!date) return NaN;
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.round((new Date(date) - today) / 86400000);
+}
+
+function renderDeadlines() {
+  if (!dlList) return;
+  dlList.innerHTML = "";
+  if (!deadlines.length) {
+    dlList.innerHTML = '<p style="font-size:12px;color:#9e8f7e">No deadlines yet.</p>';
+    return;
+  }
+  deadlines.slice().sort((a,b) => new Date(a.date||0) - new Date(b.date||0))
+    .forEach((dl, index) => {
+      const d = daysLeft(dl.date);
+      let cls = "safe", label = "";
+      if (isNaN(d))       { label = "No date set"; cls = "safe"; }
+      else if (d < 0)     { label = "Passed"; cls = "urgent"; }
+      else if (d === 0)   { label = "TODAY!"; cls = "urgent"; }
+      else if (d <= 3)    { label = `${d} days left`; cls = "urgent"; }
+      else if (d <= 10)   { label = `${d} days left`; cls = "soon"; }
+      else                { label = `${d} days left`; cls = "safe"; }
+      const card = document.createElement("article");
+      card.className = "deadline-card";
+      card.innerHTML = `
+        <button class="small" data-index="${index}">✕</button>
+        <div class="deadline-title">${dl.title}</div>
+        <div class="deadline-meta">${dl.date || "No date"} · ${dl.type}</div>
+        <div class="deadline-status ${cls}">${label}</div>
+      `;
+      dlList.appendChild(card);
+    });
+}
+
+renderDeadlines();
+
+const dlAdd = document.getElementById("dl-add");
+if (dlAdd) {
+  dlAdd.addEventListener("click", () => {
+    const title = document.getElementById("dl-title").value.trim();
+    if (!title) return;
+    deadlines.push({ title, type: document.getElementById("dl-type").value, date: document.getElementById("dl-date").value });
+    localStorage.setItem(dlKey, JSON.stringify(deadlines));
+    renderDeadlines();
+    document.getElementById("dl-title").value = "";
+  });
+}
+
+if (dlList) {
+  dlList.addEventListener("click", e => {
+    const btn = e.target.closest("button.small");
+    if (!btn) return;
+    deadlines.splice(Number(btn.dataset.index), 1);
+    localStorage.setItem(dlKey, JSON.stringify(deadlines));
+    renderDeadlines();
+  });
+}
+
+// Quiz engine
+const quizzes = {
+  theory: [
+    { q:"Who coined the term 'différance'?", options:["Roland Barthes","Michel Foucault","Jacques Derrida","Julia Kristeva"], a:2 },
+    { q:"'The Death of the Author' was written by:", options:["Jacques Derrida","Roland Barthes","Michel Foucault","Gérard Genette"], a:1 },
+    { q:"The concept of 'habitus' is associated with:", options:["Louis Althusser","Antonio Gramsci","Pierre Bourdieu","Raymond Williams"], a:2 },
+    { q:"'Can the Subaltern Speak?' was written by:", options:["Homi K. Bhabha","Edward Said","Gayatri Spivak","Frantz Fanon"], a:2 },
+    { q:"Althusser's ISAs reproduce:", options:["Military power","Legal codes","Ideology","Economic production"], a:2 },
+  ],
+  postcolonial: [
+    { q:"'Orientalism' by Edward Said was published in:", options:["1965","1971","1978","1985"], a:2 },
+    { q:"'The Location of Culture' (1994) was written by:", options:["Said","Fanon","Homi Bhabha","Spivak"], a:2 },
+    { q:"'Mimicry' in postcolonial theory refers to:", options:["Exact copying","Colonial subjects imitating colonisers","Hybridity","Fieldwork"], a:1 },
+    { q:"'Things Fall Apart' is set in:", options:["Kenya","Ghana","Nigeria","Trinidad"], a:2 },
+    { q:"Fanon's 'Wretched of the Earth' was originally written in:", options:["English","French","Arabic","Spanish"], a:1 },
+  ],
+  british: [
+    { q:"'Paradise Lost' was written by:", options:["John Donne","John Milton","Edmund Spenser","Andrew Marvell"], a:1 },
+    { q:"'To be, or not to be' appears in:", options:["Macbeth","King Lear","Hamlet","Othello"], a:2 },
+    { q:"'Lyrical Ballads' (1798) launched:", options:["Neoclassicism","Romanticism","Modernism","Realism"], a:1 },
+    { q:"T.S. Eliot's 'The Waste Land' was published in:", options:["1912","1917","1922","1930"], a:2 },
+    { q:"'Mrs Dalloway' uses which narrative technique?", options:["Epistolary","Stream of consciousness","3rd person omniscient","Diary"], a:1 },
+  ],
+  cultural: [
+    { q:"Stuart Hall's encoding/decoding model has how many reading positions?", options:["2","3","4","5"], a:1 },
+    { q:"The Birmingham CCCS was founded by:", options:["Stuart Hall","Raymond Williams","Richard Hoggart","Dick Hebdige"], a:2 },
+    { q:"Gramsci's 'hegemony' refers to:", options:["Military domination","Cultural/ideological leadership","Economic planning","Legal sovereignty"], a:1 },
+    { q:"'The Culture Industry' was theorised by:", options:["Walter Benjamin","Adorno & Horkheimer","Marcuse","Habermas"], a:1 },
+    { q:"Raymond Williams' 'Keywords' explores:", options:["Narrative form","Poetic metre","Vocabulary of culture & society","Marxist economics"], a:2 },
+  ],
+};
+
+const quizBox = document.getElementById("quiz-box");
+let currentQuiz = "theory", qIndex = 0, qScore = 0;
+
+function renderQuestion() {
+  const list = quizzes[currentQuiz];
+  if (!quizBox || !list) return;
+  if (qIndex >= list.length) { renderResult(); return; }
+  const q = list[qIndex];
+  quizBox.innerHTML = `
+    <div class="q-meta">Question ${qIndex + 1} of ${list.length}</div>
+    <div class="q-text">${q.q}</div>
+    <div class="q-options">
+      ${q.options.map((opt,i) => `<label class="q-option"><input type="radio" name="quiz-option" value="${i}"><span>${opt}</span></label>`).join("")}
+    </div>
+    <div class="q-actions">
+      <button class="small" id="quiz-restart">↺ Restart</button>
+      <button class="primary" id="quiz-next">Next →</button>
+    </div>
+  `;
+  document.getElementById("quiz-next").onclick = () => {
+    const chosen = document.querySelector("input[name='quiz-option']:checked");
+    if (!chosen) { alert("Please select an answer!"); return; }
+    if (Number(chosen.value) === q.a) qScore++;
+    qIndex++; renderQuestion();
+  };
+  document.getElementById("quiz-restart").onclick = () => { qIndex = 0; qScore = 0; renderQuestion(); };
+}
+
+function renderResult() {
+  const total = quizzes[currentQuiz].length;
+  const pct = Math.round((qScore / total) * 100);
+  const msg = pct >= 80 ? "Excellent — strong grasp!" : pct >= 60 ? "Good work — revise what you missed." : "Keep practising — you'll get there!";
+  quizBox.innerHTML = `
+    <div class="q-meta">Quiz finished</div>
+    <div class="q-text">You scored <strong>${qScore} / ${total}</strong> (${pct}%)</div>
+    <p style="font-size:12px;color:#9e8f7e;margin:8px 0 14px">${msg}</p>
+    <div class="q-actions"><button class="primary" id="quiz-again">Take Again</button></div>
+  `;
+  document.getElementById("quiz-again").onclick = () => { qIndex = 0; qScore = 0; renderQuestion(); };
+}
+
+const quizTabs = document.querySelectorAll("#quiz-tabs .pill");
+quizTabs.forEach(btn => {
+  btn.addEventListener("click", () => {
+    quizTabs.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentQuiz = btn.dataset.quiz;
+    qIndex = 0; qScore = 0;
+    renderQuestion();
+  });
+});
+
+renderQuestion();
+
+</script>
+</body>
+</html>
